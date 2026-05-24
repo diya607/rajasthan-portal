@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <!-- Fixed: Ensured active layout state remains stable on deep routing -->
+    <div class="page active" id="page-internconnect">
+      
+      <div class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <span class="sep">›</span>
+        <span class="current">InternConnect Platform</span>
+      </div>
+      
+      <div class="content-grid">
+        <!-- SEARCH FILTER PANEL -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">🔍</div><span class="panel-title">Search Internship Opportunities</span></div>
+          </div>
+          <div class="panel-body">
+            <form method="GET" action="{{ url_for('internconnect') }}">
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Keyword / Role</label>
+                <input class="form-control" type="text" name="q" placeholder="e.g. Web Developer, Data Analyst...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Sector</label>
+                  <!-- Fixed: Ensured name attribute binds cleanly to request arguments -->
+                  <select class="form-control" name="sector">
+                    <option value="">All Sectors</option>
+                    <option value="IT">IT / Software</option>
+                    <option value="Government">Government / PSU</option>
+                    <option value="Banking">Banking / Finance</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Education">Education</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">District</label>
+                  <!-- Fixed: Ensured name attribute binds cleanly to request arguments -->
+                  <select class="form-control" name="district">
+                    <option value="">All Districts</option>
+                    <option value="Jaipur">Jaipur</option>
+                    <option value="Jodhpur">Jodhpur</option>
+                    <option value="Kota">Kota</option>
+                    <option value="Udaipur">Udaipur</option>
+                    <option value="Ajmer">Ajmer</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit" style="width:100%;margin-top:12px;">Filter Opportunities</button>
+            </form>
+          </div>
+        </div>
+ <!-- OPPORTUNITIES LISTING PANEL -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">⭐</div><span class="panel-title">Available Listings</span></div>
+            <span class="panel-badge">Live Feed</span>
+          </div>
+          <div class="panel-body">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              
+              {% for internship in internships %}
+              <!-- Fixed: Swapped custom text filter logic for bulletproof mathematical modulo evaluation -->
+              <div style="border:1px solid var(--gray-200);border-radius:4px;padding:12px;border-left:3px solid {% if loop.index % 2 == 0 %}var(--gold){% else %}var(--mid){% endif %};">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                  <div>
+                    <strong style="font-size:13px; color: var(--navy);">{{ internship.role }}</strong>
+                    <div style="font-size:12px;color:var(--gray-600);margin-top:3px;">
+                      🏢 {{ internship.company }} &nbsp;·&nbsp; ⏱ {{ internship.duration }} &nbsp;·&nbsp; 💰 ₹{{ internship.stipend }}/month
+                    </div>
+                  </div>
+                  <span class="badge {% if internship.status == 'Open' %}badge-active{% else %}badge-pending{% endif %}">
+                    {{ internship.status }}
+                  </span>
+                </div>
+
+                <!-- Skill tags display -->
+                <div style="margin-top: 6px; font-size: 11px; color: var(--gray-400);">
+                  <strong>Required Skills:</strong> {{ internship.skills }}
+                </div>
+
+                <div style="margin-top:10px; display: flex; gap: 6px;">
+                  <!-- Application Submission Form Payload Interface -->
+                  <form method="POST" action="{{ url_for('api_applications') }}" style="display:inline;">
+                    <input type="hidden" name="internship_id" value="{{ internship.id }}">
+                    <!-- Safeguard baseline identity value maps into backend schema cleanly -->
+                    <input type="hidden" name="student_id" value="STU001">
+                    <button type="submit" class="btn btn-primary btn-sm">Apply Now</button>
+                  </form>
+                  <button class="btn btn-secondary btn-sm">View Details</button>
+                </div>
+              </div>
+              {% else %}
+              <div style="text-align: center; padding: 20px; color: var(--gray-400);">
+                No matching internships found at this time.
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+        <!-- RESEARCH AND GAP SUMMARY PANEL -->
+        <div class="panel span-2">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">⚖</div><span class="panel-title">InternConnect — Platform Analysis</span></div>
+          </div>
+          <div class="panel-body">
+            <div class="pros-cons-wrap">
+              <div class="pc-col pros">
+                <div class="pc-head"><div class="pc-dot"></div>Platform Strengths</div>
+                <ul class="pc-list">
+                  <li>Simplifies internship search process — single platform for all Rajasthan opportunities</li>
+                  <li>Enhances student-industry collaboration through unified dashboards and messaging</li>
+                  <li>Provides monitoring dashboards for institutions to track student progress</li>
+                  <li>Automates employer-student interaction, reducing manual coordination overhead</li>
+                </ul>
+              </div>
+              <div class="pc-col cons">
+                <div class="pc-head"><div class="pc-dot"></div>Current Gaps</div>
+                <ul class="pc-list">
+                  <li>Limited pilot testing — only 3 cities; full statewide rollout not yet validated</li>
+                  <li>Requires strong security mechanisms for student data and employer verification</li>
+                  <li>No standardized fraud prevention for fake internship listings</li>
+                  <li>Mobile-first access needed for rural students with limited desktop access</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

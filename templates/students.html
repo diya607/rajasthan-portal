@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<div class="page active" id="page-students">
+  <div class="breadcrumb">
+    <a href="{{ url_for('dashboard') }}">Home</a><span class="sep">›</span>
+    <span class="current">Student Registry</span>
+  </div>
+
+  <div class="content-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-head-left"><div class="panel-icon">➕</div><span class="panel-title">New Student Registration</span></div>
+      </div>
+      <div class="panel-body">
+        <form method="POST" action="{{ url_for('students') }}" enctype="multipart/form-data">
+          <div class="form-section">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label">Full Name</label>
+              <input type="text" name="name" class="form-control" placeholder="Enter Full Name" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Academic Branch</label>
+                <select name="branch" class="form-control">
+                  <option value="CSE">Computer Science (CSE)</option>
+                  <option value="IT">Information Technology (IT)</option>
+                  <option value="ECE">Electronics (ECE)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Current CGPA</label>
+                <input type="number" name="cgpa" step="0.01" min="0" max="10" class="form-control" placeholder="e.g. 8.5" required>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label">Core Technical Skills</label>
+              <input type="text" name="skills" class="form-control" placeholder="e.g. Python, SQL, React" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="student@rajasthan.edu.in" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Contact Number</label>
+                <input type="tel" name="phone" class="form-control" placeholder="10-digit mobile" required>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 12px; margin-top: 4px;">
+              <label class="form-label" style="color: var(--navy); font-weight: 600;">Upload Professional Resume (PDF, DOCX · Max 5MB)</label>
+              <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx" required style="padding: 5px;">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Registration</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-head-left"><div class="panel-icon">🎓</div><span class="panel-title">Onboarded Students Database</span></div>
+      </div>
+      <div class="panel-body">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student Name</th>
+              <th>Branch</th>
+              <th>CGPA</th>
+              <th>Document Link</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students %}
+            <tr>
+              <td>{{ student.id if student.id else 'NEW' }}</td>
+              <td><strong>{{ student.name }}</strong><br><small style="color: #666;">{{ student.skills }}</small></td>
+              <td><span class="badge badge-review">{{ student.branch }}</span></td>
+              <td>{{ student.cgpa }}</td>
+              
+              <td>
+                {% if student.resume_path %}
+                  <a href="{{ url_for('static', filename='uploads/resumes/' + student.resume_path) }}" target="_blank" style="color: var(--mid); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
+                    📂 View Resume
+                  </a>
+                {% else %}
+                  <span style="color: var(--gray-400); font-style: italic; font-size: 11.5px;">No File Linked</span>
+                {% endif %}
+              </td>
+              
+              <td>
+                {% if student.status == 'Placed' %}
+                  <span class="badge badge-active">Placed</span>
+                {% elif student.status == 'Searching' %}
+                  <span class="badge badge-pending">Searching</span>
+                {% else %}
+                  <span class="badge badge-review">{{ student.status }}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

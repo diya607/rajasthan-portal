@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <!-- Fixed: Added 'active' to ensure full visibility upon direct page routing or refresh -->
+    <div class="page active" id="page-notifications">
+      
+      <!-- Fixed: Repaired legacy JavaScript navigation with static Flask endpoints -->
+      <div class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Notifications</span>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-head-left">
+            <div class="panel-icon">🔔</div>
+            <span class="panel-title">System Notifications</span>
+          </div>
+          <!-- Dynamic count reading length of template array directly -->
+          <span class="panel-badge">{{ notifications|length }} Messages</span>
+        </div>
+        
+        <div>
+          <!-- Fixed: Dynamic looping structure parsing live system feeds -->
+          {% for notif in notifications %}
+          <div class="notif-item">
+            <!-- Dynamic map to resolve pre-existing styling colors based on warning types -->
+            <div class="notif-icon {% if notif.type == 'success' %}success{% elif notif.type == 'warning' or notif.type == 'danger' %}warn{% else %}info{% endif %}">
+              {{ notif.icon }}
+            </div>
+            
+            <div class="notif-content">
+              <div class="notif-msg">{{ notif.msg|safe }}</div>
+              <div class="notif-time">{{ notif.time }}</div>
+            </div>
+          </div>
+          {% else %}
+          <div style="text-align: center; padding: 30px; color: var(--gray-400);">
+            <div style="font-size: 24px; margin-bottom: 8px;">📬</div>
+            All caught up! No recent system notifications found.
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock %}

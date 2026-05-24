@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div class="page active" id="page-placement">
+      
+      <div class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Placement Analytics</span>
+      </div>
+      
+      <div class="content-grid">
+        <!-- ADVANCED MODEL DATA STRENGTHS PANEL -->
+        <div class="panel span-2">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">🤖</div><span class="panel-title">ML-Based Placement Prediction System</span></div>
+            <span class="panel-badge">Beta Model</span>
+          </div>
+          <div class="panel-body">
+            <div class="pros-cons-wrap">
+              <div class="pc-col pros">
+                <div class="pc-head"><div class="pc-dot"></div>Model Strengths</div>
+                <ul class="pc-list">
+                  <li>Data-driven placement decision support for institution administrators</li>
+                  <li>Identifies students requiring additional vocational or soft-skills training</li>
+                  <li>Improves prediction accuracy compared to manual counsellor assessment</li>
+                  <li>Integrates academic, attendance, and skill-based features for holistic profiling</li>
+                </ul>
+              </div>
+              <div class="pc-col cons">
+                <div class="pc-head"><div class="pc-dot"></div>Current Limitations</div>
+                <ul class="pc-list">
+                  <li>Requires large labelled datasets from multiple institutions for training</li>
+                  <li>Data privacy and ethical concerns under DPDP Act 2023 compliance</li>
+                  <li>Risk of algorithmic bias against certain student demographics</li>
+                  <li>Model accuracy varies significantly across different discipline streams</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- INTERACTIVE JS PREDICTION CALCULATOR -->
+        <div class="panel">
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">🔬</div><span class="panel-title">Predict Placement Probability</span></div></div>
+          <div class="panel-body">
+            <div class="form-group" style="margin-bottom:10px;"><label class="form-label">CGPA (out of 10)</label><input class="form-control" type="number" id="ml-cgpa" placeholder="e.g. 7.5" min="0" max="10" step="0.1"></div>
+            <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Attendance (%)</label><input class="form-control" type="number" id="ml-att" placeholder="e.g. 82" min="0" max="100"></div>
+            <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Technical Skills Score (out of 10)</label><input class="form-control" type="number" id="ml-skill" placeholder="e.g. 6" min="0" max="10"></div>
+            <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Stream</label>
+              <select class="form-control" id="ml-stream"><option value="cs">Computer Science / IT</option><option value="mech">Mechanical Engineering</option><option value="civil">Civil Engineering</option><option value="commerce">Commerce / MBA</option><option value="science">Science</option></select>
+            </div>
+            <button class="btn btn-primary" style="width:100%;" onclick="runMLPredict()">▶ Run Prediction</button>
+            <div id="ml-result" style="margin-top:12px;display:none;"></div>
+          </div>
+        </div>
+        
+        <!-- LIVE TRENDS GRAPH -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">📈</div><span class="panel-title">Live Placement Trends by Branch</span></div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-bar-wrap">
+              {% for stat in branch_stats %}
+              <div class="chart-row">
+                <div class="chart-label" style="text-transform: capitalize;">{{ stat.branch }}</div>
+                <div class="chart-bar-outer">
+                  <div class="chart-bar-fill" style="width: {{ stat.pct }}%; background: {% if stat.pct >= 80 %}#1a3a8f{% elif stat.pct >= 60 %}#2a5298{% else %}#c9a227{% endif %};">
+                    {{ stat.pct }}%
+                  </div>
+                </div>
+                <div class="chart-val" style="font-size: 11px;">{{ stat.placed }}/{{ stat.total }}</div>
+              </div>
+              {% else %}
+              <div style="text-align: center; padding: 20px; color: var(--gray-400);">No branch metrics available.</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT ML VERIFICATION SUB-MODULE -->
+        <div class="panel span-2" style="margin-top: 4px;">
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">📋</div><span class="panel-title">Recent High-Confidence Predictions</span></div></div>
+          <div class="panel-body" style="padding: 0;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student Profile Name</th>
+                  <th>Core Fit Metric</th>
+                  <th>System Status Badge</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for candidate in ml_predictions %}
+                <tr>
+                  <td><strong>{{ candidate.name }}</strong></td>
+                  <td style="font-weight: 600; color: var(--navy);">{{ candidate.score }}% Matching Rating</td>
+                  <td>
+                    {% if candidate.score >= 80 %}
+                      <span class="badge badge-active">Optimal Fit</span>
+                    {% else %}
+                      <span class="badge badge-review">Targeted Review</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="3" style="text-align: center; padding: 14px; color: var(--gray-400);">No recent predictions calculated.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

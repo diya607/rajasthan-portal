@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <!-- Fixed: Added 'active' class to guarantee explicit rendering without relying on JavaScript state swaps -->
+    <div class="page active" id="page-settings">
+      
+      <!-- Fixed: Legitimized navigation links using absolute Flask endpoint routings -->
+      <div class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Settings</span>
+      </div>
+      
+      <div class="content-grid">
+        <!-- USER PROFILE FORM SUB-MODULE -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">👤</div><span class="panel-title">Profile & Account</span></div>
+          </div>
+          <div class="panel-body">
+            <div class="profile-card">
+              <div class="profile-avatar">AK</div>
+              <div>
+                <div class="profile-name">Arjun Kumar</div>
+                <div class="profile-role">District Coordinator · Jaipur</div>
+              </div>
+            </div>
+            
+            <!-- Real post action pointing directly to settings endpoint -->
+            <form method="POST" action="{{ url_for('settings') }}">
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Display Name</label>
+                <input class="form-control" type="text" name="display_name" value="Arjun Kumar">
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Official Email</label>
+                <input class="form-control" type="email" name="email" value="arjun.kumar@rajasthan.gov.in">
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Department</label>
+                <input class="form-control" type="text" value="Higher Education, Jaipur Division" readonly style="background: var(--gray-50); color: var(--gray-400);">
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Employee ID</label>
+                <input class="form-control" type="text" value="RJ-HE-2021-00847" readonly style="background: var(--gray-50); color: var(--gray-400);">
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm">Update Profile</button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- SYSTEM PREFERENCES OPT-IN BLOCK -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">⚙</div><span class="panel-title">Preferences</span></div>
+          </div>
+          <div class="panel-body">
+            <form method="POST" action="{{ url_for('settings') }}">
+              <div class="mini-metric">
+                <span>Default Language</span>
+                <select class="form-control" name="lang" style="width:130px;padding:4px 8px;font-size:12px;">
+                  <option value="en">English</option>
+                  <option value="hi">Hindi</option>
+                </select>
+              </div>
+              <div class="mini-metric"><span>Email Notifications</span><input type="checkbox" name="email_notif" checked style="width:16px;height:16px;cursor:pointer;"></div>
+              <div class="mini-metric"><span>SMS Alerts</span><input type="checkbox" name="sms_notif" checked style="width:16px;height:16px;cursor:pointer;"></div>
+              <div class="mini-metric"><span>Dashboard Auto-refresh</span><input type="checkbox" name="auto_refresh" style="width:16px;height:16px;cursor:pointer;"></div>
+              <div class="mini-metric"><span>Show Hindi Labels</span><input type="checkbox" name="hindi_labels" style="width:16px;height:16px;cursor:pointer;"></div>
+              <div class="mini-metric"><span>Dark Mode</span><input type="checkbox" name="dark_mode" style="width:16px;height:16px;cursor:pointer;"></div>
+              <button type="submit" class="btn btn-primary btn-sm" style="margin-top:10px;">Save Preferences</button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- CREDENTIAL ENFORCEMENT & SECURITY SYSTEM -->
+        <div class="panel span-2">
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">🔒</div><span class="panel-title">Security & Access</span></div></div>
+          <div class="panel-body">
+            <form method="POST" action="{{ url_for('settings') }}">
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Current Password</label><input class="form-control" type="password" name="current_password" placeholder="Enter current password"></div>
+                <div class="form-row-nested" style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
+                  <label class="form-label">New Password</label>
+                  <input class="form-control" type="password" name="new_password" placeholder="Min 8 chars, 1 uppercase, 1 number">
+                </div>
+              </div>
+              <div class="btn-row">
+                <button type="submit" class="btn btn-primary btn-sm">Change Password</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="showToast('Two-factor authentication setup initialized!','success')">Enable 2FA</button>
+                <!-- Secure modal integration already wired into base.html layout markup -->
+                <button type="button" class="btn btn-danger btn-sm" onclick="showModal('logoutModal')">Log Out</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

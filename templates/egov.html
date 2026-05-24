@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <!-- Fixed: Added 'active' class to guarantee explicit rendering without relying on legacy JavaScript state swaps -->
+    <div class="page active" id="page-egov">
+      
+      <!-- Fixed: Standardized routing pathways using absolute Flask template variables -->
+      <div class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <span class="sep">›</span>
+        <span class="current">E-Governance Module</span>
+      </div>
+      
+      <div class="content-grid">
+        <!-- RESEARCH FINDINGS PANEL -->
+        <div class="panel span-2">
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <div class="panel-icon">🏛</div>
+              <span class="panel-title">E-Governance & Its Impact on Higher Education — Rajasthan</span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dimension</th>
+                  <th>Finding</th>
+                  <th>Current Status</th>
+                  <th>Priority Level</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Transparency</strong></td>
+                  <td>E-governance measurably improves administrative transparency in government colleges</td>
+                  <td><span class="badge badge-active">Confirmed</span></td>
+                  <td>High</td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showToast('Transparency report opened','')">View Report</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Digital Divide</strong></td>
+                  <td>Rural districts face significant access limitations due to poor internet connectivity</td>
+                  <td><span class="badge badge-critical">Action Required</span></td>
+                  <td style="color:#c62828;font-weight:600;">Critical</td>
+                  <td><button class="btn btn-danger btn-sm" onclick="showToast('Rural infrastructure task assigned!','success')">Assign Task</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Infrastructure</strong></td>
+                  <td>Training and physical infrastructure investment needed before full deployment</td>
+                  <td><span class="badge badge-review">In Progress</span></td>
+                  <td>High</td>
+                  <td><button class="btn btn-secondary btn-sm">Track Progress</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Efficiency</strong></td>
+                  <td>Administrative efficiency measurably improved in urban institutions post-deployment</td>
+                  <td><span class="badge badge-active">Confirmed</span></td>
+                  <td>Medium</td>
+                  <td><button class="btn btn-secondary btn-sm">View Metrics</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Centralized Platforms</strong></td>
+                  <td>Encourages unified digital platform adoption across government departments</td>
+                  <td><span class="badge badge-active">Adopted</span></td>
+                  <td>Medium</td>
+                  <td><button class="btn btn-secondary btn-sm">Details</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Accessibility</strong></td>
+                  <td>Accessibility of educational services improved for students in connected areas</td>
+                  <td><span class="badge badge-review">Partial</span></td>
+                  <td>High</td>
+                  <td><button class="btn btn-secondary btn-sm">Expand</button></td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="rec-box">
+              <h4>E-Governance Roadmap Priorities — FY 2025–26</h4>
+              <ul>
+                <li>Connect all 33 district education offices to the state e-governance network by December 2025</li>
+                <li>Deploy offline-capable apps for areas with poor connectivity — prioritize Barmer, Jaisalmer, Balotra</li>
+                <li>Mandatory digital literacy training for all government college administrative staff</li>
+                <li>Integrate IFMS, SIPF, and SSO-Rajasthan with the education e-governance backbone</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIVE SERVICES METRICS PANEL (DYNAMIC INTEGRATION) -->
+        <div class="panel span-2" style="margin-top: 8px;">
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <div class="panel-icon">⚙</div>
+              <span class="panel-title">Active Core Infrastructure Portal Services</span>
+            </div>
+            <span class="panel-badge">Live Metrics</span>
+          </div>
+          <div class="panel-body" style="padding: 0;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Service Application Name</th>
+                  <th>Current Core Status</th>
+                  <th>Total Enrolled Userbase</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Fixed: Dynamically loops the live 'services' array coming from app.py -->
+                {% for service in services %}
+                <tr>
+                  <td><strong>{{ service.name }}</strong></td>
+                  <td>
+                    {% if service.status == 'Active' %}
+                      <span class="badge badge-active"><span class="status-dot live"></span>Active</span>
+                    {% elif service.status == 'Maintenance' %}
+                      <span class="badge badge-pending"><span class="status-dot pending"></span>Under Maintenance</span>
+                    {% else %}
+                      <span class="badge badge-review">{{ service.status }}</span>
+                    {% endif %}
+                  </td>
+                  <td class="val" style="font-weight: 600; color: var(--navy);">{{ service.users }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="3" style="text-align: center; color: var(--gray-400); padding: 14px;">
+                    No operational portal services are currently indexed.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

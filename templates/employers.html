@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <!-- Fixed: Added 'active' class to make the view display instantly on page load -->
+    <div class="page active" id="page-employers">
+      
+      <!-- Fixed: Standardized home link back to semantic Flask routing -->
+      <div class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Employer Portal</span>
+      </div>
+      
+      <div class="content-grid">
+        
+        <!-- EMPLOYER REGISTRATION FORM -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">🏢</div><span class="panel-title">Register New Employer</span></div>
+          </div>
+          <div class="panel-body">
+            <!-- Fixed: Added real method and target action to connect form submission to your app.py backend -->
+            <form method="POST" action="{{ url_for('employers') }}">
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Organisation Name *</label>
+                <input class="form-control" name="company" type="text" placeholder="Enter organisation name" required>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Sector</label>
+                <select class="form-control" name="sector">
+                  <option>Information Technology</option>
+                  <option>Manufacturing</option>
+                  <option>Healthcare</option>
+                  <option>Finance & Banking</option>
+                  <option>Government / PSU</option>
+                  <option>Education</option>
+                  <option>Retail & Commerce</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Role Title *</label>
+                <input class="form-control" name="role" type="text" placeholder="e.g. ML Intern" required>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Duration</label>
+                <input class="form-control" name="duration" type="text" placeholder="e.g. 3 months">
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Required Skills</label>
+                <input class="form-control" name="skills" type="text" placeholder="e.g. Python, SQL">
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Stipend Amount (₹/month) *</label>
+                <input class="form-control" name="stipend" type="number" placeholder="e.g. 15000" required>
+              </div>
+              <button class="btn btn-primary" type="submit" style="width:100%;margin-top:6px;">Submit for Verification</button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- ACTIVE PARTNERS LIST (DYNAMIC DATA) -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left"><div class="panel-icon">📋</div><span class="panel-title">Active Employer Partners & Openings</span></div>
+          </div>
+          <div class="panel-body">
+            <div class="search-wrap" style="margin-bottom:10px;">
+              <input type="text" class="search-input" placeholder="Search employers...">
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Organisation & Role</th>
+                  <th>Duration</th>
+                  <th>Stipend</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Fixed: Loops through your python DEMO_INTERNSHIPS or MySQL internship data array dynamically -->
+                {% for internship in internships %}
+                <tr>
+                  <td>
+                    <strong>{{ internship.company }}</strong><br>
+                    <small style="color: var(--gray-600);">{{ internship.role }}</small>
+                  </td>
+                  <td>{{ internship.duration }}</td>
+                  <td style="font-weight: 500; color: var(--navy);">₹{{ internship.stipend }}</td>
+                  <td>
+                    {% if internship.status == 'Open' %}
+                      <span class="badge badge-active">Open</span>
+                    {% elif internship.status == 'Closing' %}
+                      <span class="badge badge-pending">Closing Soon</span>
+                    {% else %}
+                      <span class="badge badge-review">{{ internship.status }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+{% endblock %}

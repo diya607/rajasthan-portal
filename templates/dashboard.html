@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<div class="page active" id="page-dashboard">
+  <div class="breadcrumb">
+    <a href="#">Home</a><span class="sep">›</span>
+    <span class="current">Dashboard</span>
+  </div>
+
+  <div class="alert-strip">
+    <div class="pulse-dot"></div>
+    <strong>Notice:</strong>&nbsp;
+    InternConnect Pilot Phase 2 is now open for Jaipur, Jodhpur, and Kota districts. Rural infrastructure upgrades are in progress across 12 districts.&nbsp;
+    <a href="#" style="color:#92400e;font-weight:600;text-decoration:underline;">View Details</a>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-students">48,230</div>
+      <div class="stat-label">Students Registered</div>
+      <div class="pbar-wrap"><div class="pbar-outer"><div class="pbar-inner" style="width:72%"></div></div></div>
+      <div class="stat-change up">↑ 12.4% this quarter</div>
+    </div>
+    <div class="stat-card gold-top">
+      <div class="stat-num">1,847</div>
+      <div class="stat-label">Employer Partners</div>
+      <div class="pbar-wrap"><div class="pbar-outer"><div class="pbar-inner" style="width:55%;background:var(--gold)"></div></div></div>
+      <div class="stat-change up">↑ 8.1% this quarter</div>
+    </div>
+    <div class="stat-card green-top">
+      <div class="stat-num">312</div>
+      <div class="stat-label">Institutions Enrolled</div>
+      <div class="pbar-wrap"><div class="pbar-outer"><div class="pbar-inner" style="width:63%;background:#2e7d32"></div></div></div>
+      <div class="stat-change up">↑ 5.2% this quarter</div>
+    </div>
+    <div class="stat-card red-top">
+      <div class="stat-num">6,104</div>
+      <div class="stat-label">Active Internships</div>
+      <div class="pbar-wrap"><div class="pbar-outer"><div class="pbar-inner" style="width:40%;background:#c62828"></div></div></div>
+      <div class="stat-change dn">↓ 2.1% from last month</div>
+    </div>
+  </div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="switchTab('tab-overview', this)">System Overview</button>
+    <button class="tab-btn" onclick="switchTab('tab-research', this)">Research Findings</button>
+    <button class="tab-btn" onclick="switchTab('tab-implstatus', this)">Implementation Status</button>
+    <button class="tab-btn" onclick="switchTab('tab-district', this)">District Coverage</button>
+  </div>
+
+  <div id="tab-overview" class="tab-panel active">
+    <div class="content-grid">
+      <div class="panel span-2">
+        <div class="panel-head">
+          <div class="panel-head-left"><div class="panel-icon">⚖</div><span class="panel-title">Research-based System Analysis — All Modules</span></div>
+          <span class="panel-badge">4 Papers Reviewed</span>
+        </div>
+        <div class="panel-body">
+          <div class="pros-cons-wrap">
+            <div class="pc-col pros">
+              <div class="pc-head"><div class="pc-dot"></div>Strengths Identified</div>
+              <ul class="pc-list">
+                <li>Reduces manual paperwork across student-employer-institution workflows significantly</li>
+                <li>Centralizes internship tracking with real-time coordination among all stakeholders</li>
+                <li>Supports digital transformation in government education systems of Rajasthan</li>
+                <li>Improves administrative transparency and efficiency in higher education institutions</li>
+                <li>Data-driven placement decision support helps identify students needing training</li>
+                <li>Simplifies internship discovery, application tracking, and employer interaction</li>
+                <li>Provides monitoring dashboards for institutions to track student outcomes</li>
+                <li>Encourages centralized digital platforms and reduces siloed operations</li>
+              </ul>
+            </div>
+            <div class="pc-col cons">
+              <div class="pc-head"><div class="pc-dot"></div>Challenges & Risks</div>
+              <ul class="pc-list">
+                <li>Limited scalability — mostly conceptual with fewer large-scale real-world implementations</li>
+                <li>Digital divide in rural Rajasthan limits equitable access across all districts</li>
+                <li>Requires significant training and infrastructure development in remote areas</li>
+                <li>ML placement models need large datasets; raises data privacy and ethical concerns</li>
+                <li>Limited pilot testing of InternConnect; strong security mechanisms still required</li>
+                <li>Employer verification protocols not yet standardized across the platform</li>
+                <li>Automated academic scoring may introduce bias against certain student groups</li>
+                <li>Sustained funding and political will needed for long-term infrastructure rollout</li>
+              </ul>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Policy Recommendations — Government of Rajasthan</h4>
+            <ul>
+              <li>Phase-wise rollout: begin with urban districts, expand only after rural connectivity is secured</li>
+              <li>Partner with NIC and REIL for infrastructure, cybersecurity, and data compliance</li>
+              <li>Mandate employer verification and establish district-level grievance redressal cells</li>
+              <li>Commission independent scalability audit before statewide IMS deployment</li>
+              <li>Appoint Data Protection Officer per DPDP Act 2023 compliance before ML deployment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">📊</div><span class="panel-title">Platform Metrics</span></div></div>
+        <div class="panel-body">
+          <div class="mini-metric"><span>Internship Completion Rate</span><span class="val">78.4%</span></div>
+          <div class="mini-metric"><span>Student-to-Job Conversion</span><span class="val">61.2%</span></div>
+          <div class="mini-metric"><span>Employer Satisfaction Score</span><span class="val">4.1 / 5</span></div>
+          <div class="mini-metric"><span>Avg. Days to Placement</span><span class="val">23 days</span></div>
+          <div class="mini-metric"><span>Rural District Coverage</span><span class="val">38%</span></div>
+          <div class="mini-metric"><span>Pending Verifications</span><span class="val" style="color:#c62828">214</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚡</div><span class="panel-title">Quick Actions</span></div></div>
+        <div class="panel-body">
+          <div class="btn-row" style="flex-direction:column; gap: 8px;">
+            <a class="btn btn-primary" href="{{ url_for('students') }}" style="text-align: center; text-decoration: none; display: block;">➕ Register New Student</a>
+            <a class="btn btn-secondary" href="{{ url_for('employers') }}" style="text-align: center; text-decoration: none; display: block;">🏢 Open Employer Panel</a>
+            <button class="btn btn-gold" onclick="parent.showModal('reportModal')">📥 Generate Report</button>
+            <a class="btn btn-secondary" href="{{ url_for('placement') }}" style="text-align: center; text-decoration: none; display: block;">📊 View Placement Analytics</a>
+            <a class="btn btn-secondary" href="{{ url_for('egov') }}" style="text-align: center; text-decoration: none; display: block;">🏛 E-Governance Status</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-research" class="tab-panel">
+    <div class="panel">
+      <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">📖</div><span class="panel-title">Research Papers Summary</span></div></div>
+      <div class="panel-body">
+        <table class="data-table">
+          <thead><tr><th>Paper</th><th>Methodology</th><th>Key Finding</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Targeted Internship Systems (IMS)</strong></td>
+              <td>Design & Implementation of IMS connecting students, institutions, employers</td>
+              <td>Improves communication, automates tasks, centralizes data and documentation</td>
+              <td><span class="badge badge-active">Deployed</span></td>
+            </tr>
+            <tr>
+              <td><strong>Student Placement Prediction — ML Approach</strong></td>
+              <td>Machine learning on academic performance, attendance, technical skills</td>
+              <td>Academic performance, attendance, and technical skills strongly influence placements</td>
+              <td><span class="badge badge-review">Under Review</span></td>
+            </tr>
+            <tr>
+              <td><strong>E-Governance Impact on Higher Education (Rajasthan)</strong></td>
+              <td>Examines how e-governance improves management and services</td>
+              <td>Enhances transparency, efficiency, and accessibility of educational services</td>
+              <td><span class="badge badge-active">Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>InternConnect — Centralized Platform</strong></td>
+              <td>Centralized digital platform connecting students with industry opportunities</td>
+              <td>Simplifies discovery, application tracking, and employer-student interaction</td>
+              <td><span class="badge badge-pending">Pilot</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-implstatus" class="tab-panel">
+    <div class="panel">
+      <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">🔧</div><span class="panel-title">Module Implementation Status</span></div></div>
+      <div class="panel-body">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span><strong>IMS — Internship Management System</strong></span><span class="badge badge-active">Active · Phase 3</span></div>
+            <div class="pbar-outer"><div class="pbar-inner" style="width:85%"></div></div>
+            <div class="pbar-label"><span>Districts covered: 22 / 33</span><span>85%</span></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span><strong>ML Placement Prediction Engine</strong></span><span class="badge badge-review">Under Review</span></div>
+            <div class="pbar-outer"><div class="pbar-inner" style="width:45%;background:#f59e0b"></div></div>
+            <div class="pbar-label"><span>Dataset collection & model training</span><span>45%</span></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span><strong>E-Governance Higher Education Module</strong></span><span class="badge badge-active">Active · Statewide</span></div>
+            <div class="pbar-outer"><div class="pbar-inner" style="width:92%;background:#2e7d32"></div></div>
+            <div class="pbar-label"><span>All government colleges onboarded</span><span>92%</span></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span><strong>InternConnect Centralized Platform</strong> <span style="background:#fff3e0;color:#bf360c;border:1px solid #ffb74d;border-radius:2px;font-size:10px;padding:1px 6px;font-weight:600;">Priority</span></span><span class="badge badge-pending">Pilot · 3 Cities</span></div>
+            <div class="pbar-outer"><div class="pbar-inner" style="width:28%;background:#e65c00"></div></div>
+            <div class="pbar-label"><span>Jaipur, Jodhpur, Kota — pilot active</span><span>28%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-district" class="tab-panel">
+    <div class="panel">
+      <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">🗺</div><span class="panel-title">District-wise Coverage</span></div></div>
+      <div class="panel-body">
+        <div class="chart-bar-wrap">
+          <div class="chart-row"><div class="chart-label">Jaipur</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:92%;background:#1a3a8f">92%</div></div><div class="chart-val">8,420</div></div>
+          <div class="chart-row"><div class="chart-label">Jodhpur</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:78%;background:#2a5298">78%</div></div><div class="chart-val">5,210</div></div>
+          <div class="chart-row"><div class="chart-label">Kota</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:71%;background:#2a5298">71%</div></div><div class="chart-val">4,830</div></div>
+          <div class="chart-row"><div class="chart-label">Udaipur</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:65%;background:#3b6fcc">65%</div></div><div class="chart-val">3,960</div></div>
+          <div class="chart-row"><div class="chart-label">Ajmer</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:58%;background:#3b6fcc">58%</div></div><div class="chart-val">3,210</div></div>
+          <div class="chart-row"><div class="chart-label">Bikaner</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:42%;background:#c9a227">42%</div></div><div class="chart-val">2,100</div></div>
+          <div class="chart-row"><div class="chart-label">Sikar</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:35%;background:#c9a227">35%</div></div><div class="chart-val">1,840</div></div>
+          <div class="chart-row"><div class="chart-label">Barmer (Rural)</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:18%;background:#e65c00">18%</div></div><div class="chart-val">680</div></div>
+          <div class="chart-row"><div class="chart-label">Jaisalmer (Rural)</div><div class="chart-bar-outer"><div class="chart-bar-fill" style="width:12%;background:#c62828">12%</div></div><div class="chart-val">310</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:10px;">Rural districts show significantly lower penetration — aligns with digital divide finding from E-Governance research paper.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId, element) {
+    // Hide all tab panels matching this current subview context
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+    
+    // Deactivate all tab action triggers
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    // Activate target elements dynamically
+    document.getElementById(tabId).classList.add('active');
+    element.classList.add('active');
+  }
+</script>
+{% endblock %}
